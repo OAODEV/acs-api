@@ -17,7 +17,9 @@ class ScoresAPI(SocketServer.BaseRequestHandler):
         # log the request
         print "recieved request: {}".format(self.request.recv(1024))
         documents = collection.find()
-        self.request.sendall(dumps(documents))
+        header = "HTTP/1.1 200 OK"
+        body = dumps(documents)
+        self.request.sendall("{}\r\n\r\n{}".format(header, body))
 
 
 if __name__ == "__main__":
